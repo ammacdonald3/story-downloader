@@ -14,29 +14,29 @@ from datetime import datetime
 
 def log_action(message):
     """Log an action to log.txt with timestamp."""
-    log_directory = "app/data/logs"
+    log_directory = "/app/data/logs"
     os.makedirs(log_directory, exist_ok=True)
     log_file = os.path.join(log_directory, "log.txt")
     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     with open(log_file, "a") as f:
         f.write(f"{timestamp} - {message}\n")
 
-def log_error(error_msg, url=None):
-    """Log errors to error_log.txt with timestamp and optional URL."""
-    log_directory = "app/data/logs"
+def log_error(error_message, url=None):
+    """Log an error message to error_log.txt with timestamp and optional URL."""
+    log_directory = "/app/data/logs"
     os.makedirs(log_directory, exist_ok=True)
-    error_log = os.path.join(log_directory, "error_log.txt")
+    log_file = os.path.join(log_directory, "error_log.txt")
     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     
-    message = f"{timestamp} - {error_msg}"
+    message = f"{timestamp} - {error_message}"
     if url:
         message += f"\nURL: {url}"
     message += "\n" + "-"*50 + "\n"
     
-    with open(error_log, "a") as f:
+    with open(log_file, "a") as f:
         f.write(message)
     
-    log_action(f"Error logged: {error_msg[:100]}...")
+    log_action(f"Error logged: {error_message[:100]}...")
 
 def get_random_user_agent():
     """Return a random User-Agent string."""

@@ -13,12 +13,12 @@ def index():
         url = request.form.get("url")
         log_action(f"Received download request for URL: {url}")
         
-        output_directory = "app/data/epubs"
+        output_directory = "/app/data/epubs"
         os.makedirs(output_directory, exist_ok=True)
         log_action(f"Created/verified output directory: {output_directory}")
 
         # Log the URL with timestamp
-        log_directory = "app/data/logs"
+        log_directory = "/app/data/logs"
         os.makedirs(log_directory, exist_ok=True)
         log_file = os.path.join(log_directory, "url_log.txt")
         timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
@@ -73,4 +73,4 @@ def index():
 @main.route("/download/<filename>")
 def download_file(filename):
     log_action(f"Download requested for file: {filename}")
-    return send_from_directory("app/data/epubs", filename, as_attachment=True)
+    return send_from_directory("/app/data/epubs", filename, as_attachment=True)
