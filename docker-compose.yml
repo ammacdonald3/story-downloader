@@ -1,0 +1,9 @@
+services:
+  story-downloader:
+    image: ghcr.io/ammacdonald3/story-downloader:latest
+    ports:
+      - "5020:5000"
+    volumes:
+      - ./epubs:/app/data/epubs
+      - ./logs:/app/data/logs
+    restart: unless-stopped  # Automatically restart container unless manually stopped
