@@ -4,7 +4,7 @@ import os
 from datetime import datetime
 import traceback
 
-# Blueprint for modular routing
+# Blueprint for module routing
 main = Blueprint('main', __name__)
 
 @main.route("/", methods=["GET", "POST"])
