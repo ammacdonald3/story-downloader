@@ -54,6 +54,15 @@ def api_download():
 
 def process_url(url):
     """Process the URL and create EPUB file."""
+    # Check if URL is from allowed domain
+    if not url.startswith("https://www.literotica.com/"):
+        error_msg = f"Invalid URL domain: {url}"
+        log_error(error_msg, url)
+        return jsonify({
+            "success": "false",
+            "message": "Invalid URL domain"
+        }), 400
+
     output_directory = os.path.join(os.path.dirname(__file__), "data", "epubs")
     os.makedirs(output_directory, exist_ok=True)
     log_action(f"Created/verified output directory: {output_directory}")

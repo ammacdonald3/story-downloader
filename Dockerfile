@@ -11,7 +11,7 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 # Create a non-root user
-RUN useradd -u 1000 -m appuser
+RUN useradd -m appuser
 
 # Set up application directory
 WORKDIR /story-downloader
@@ -30,6 +30,7 @@ USER appuser
 # Set environment variables
 ENV FLASK_APP=app
 ENV FLASK_ENV=production
+ENV PYTHONPATH=/story-downloader
 
 # Expose port
 EXPOSE 5000

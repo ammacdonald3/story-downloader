@@ -4,6 +4,6 @@ services:
     ports:
       - "5020:5000"
     volumes:
-      - ./epubs:/app/data/epubs
-      - ./logs:/app/data/logs
+      - /mnt/watchtower_nfs_homes/appdata/stories/temp_upload:/story-downloader/app/data/epubs
+      - /home/andrew/docker/story-downloader/logs:/story-downloader/app/data/logs
     restart: unless-stopped  # Automatically restart container unless manually stopped
