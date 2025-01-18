@@ -10,9 +10,6 @@ RUN apt-get update && apt-get install -y \
     libjpeg-dev \
     && rm -rf /var/lib/apt/lists/*
 
-# Create a non-root user
-RUN useradd -m appuser
-
 # Set up application directory
 WORKDIR /story-downloader
 COPY . .
@@ -20,12 +17,8 @@ COPY . .
 # Install Python dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Create data directories and set permissions
-RUN mkdir -p app/data/epubs app/data/logs && \
-    chown -R appuser:appuser /story-downloader
-
-# Switch to non-root user
-USER appuser
+# Create data directories
+RUN mkdir -p app/data/epubs app/data/logs
 
 # Set environment variables
 ENV FLASK_APP=app
