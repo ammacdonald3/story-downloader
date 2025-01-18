@@ -14,7 +14,7 @@ from datetime import datetime
 
 def log_action(message):
     """Log an action to log.txt with timestamp."""
-    log_directory = "/app/data/logs"
+    log_directory = os.path.join(os.path.dirname(__file__), "data", "logs")
     os.makedirs(log_directory, exist_ok=True)
     log_file = os.path.join(log_directory, "log.txt")
     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
@@ -23,13 +23,14 @@ def log_action(message):
 
 def log_error(error_message, url=None):
     """Log an error message to error_log.txt with timestamp and optional URL."""
-    log_directory = "/app/data/logs"
+    log_directory = os.path.join(os.path.dirname(__file__), "data", "logs")
     os.makedirs(log_directory, exist_ok=True)
     log_file = os.path.join(log_directory, "error_log.txt")
     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     
     message = f"{timestamp} - {error_message}"
-    if url:
+    # Only add URL line if URL isn't already in the error message
+    if url and url not in error_message:
         message += f"\nURL: {url}"
     message += "\n" + "-"*50 + "\n"
     

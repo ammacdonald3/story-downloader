@@ -19,19 +19,29 @@ COPY requirements.txt .
 # Install Python dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
+# Create a non-root user
+RUN useradd -u 1000 -m appuser
+
+# Create directories for volumes and set permissions
+RUN mkdir -p /app/data/epubs /app/data/logs && \
+    chown -R appuser:appuser /app
+
 # Copy the application code
 COPY app/ ./app/
 
-# Create directories for volumes
-RUN mkdir -p /app/data/epubs /app/data/logs
+# Set ownership of application files
+RUN chown -R appuser:appuser /app
+
+# Switch to non-root user
+USER appuser
 
 # Set environment variables
 ENV FLASK_APP=app
 ENV FLASK_ENV=production
 ENV UPLOAD_FOLDER=/app/data/epubs
 
-# Expose port for Flask
+# Expose port
 EXPOSE 5000
 
-# Run Flask
+# Run the application
 CMD ["flask", "run", "--host=0.0.0.0"]
